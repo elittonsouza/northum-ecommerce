@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Política de privacidade | Método Conversão 7D</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="config.js"></script>
+  <style>
+    .legal { padding: 9rem 0 5rem; background: var(--white); }
+    body { background: var(--night); }
+    .legal .wrap { max-width: 46rem; }
+    .legal h1 { font-size: var(--fs-xl); margin-bottom: 1rem; }
+    .legal h2 { font-size: var(--fs-md); margin: 2.2rem 0 .6rem; }
+    .legal p, .legal li { color: var(--slate); line-height: 1.65; }
+    .legal ul { padding-left: 1.2rem; }
+    .draft { padding: 1rem 1.2rem; border-left: 4px solid var(--team); background: var(--team-soft); color: var(--ink) !important; border-radius: var(--radius-s); margin-bottom: 2rem; }
+    .legal-top { background: var(--night); height: 96px; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-bar">
+      <a class="brand" href="index.html">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 19 21 12 16.5 5 21Z"/></svg>
+        <span data-config="NOME_EMPRESA">Northum</span>
+      </a>
+      <a class="btn btn-ghost btn-sm" href="index.html" style="margin-left:auto">Voltar ao site</a>
+    </div>
+  </header>
+
+  <main class="legal">
+    <div class="wrap">
+      <h1>Política de privacidade</h1>
+      <p class="draft"><strong>Rascunho.</strong> Este texto é um modelo e precisa de revisão jurídica antes da publicação.</p>
+
+      <h2>Quais dados coletamos</h2>
+      <p>Pelo formulário de diagnóstico, coletamos nome, e-mail ou WhatsApp, nome da loja ou site, seu papel na empresa, principal canal de atendimento, volume aproximado de conversas e, se você quiser, uma descrição do seu maior desafio.</p>
+
+      <h2>Para que usamos</h2>
+      <p>Usamos esses dados apenas para entrar em contato sobre o diagnóstico e avaliar se o Método Conversão 7D faz sentido para a sua operação. Não vendemos nem compartilhamos seus dados para fins de marketing de terceiros.</p>
+
+      <h2>Base legal</h2>
+      <p>O tratamento se baseia no seu consentimento, registrado no envio do formulário, conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+
+      <h2>Por quanto tempo guardamos</h2>
+      <p>Mantemos os dados pelo tempo necessário para o contato comercial ou até que você solicite a exclusão. [Definir prazo.]</p>
+
+      <h2>Seus direitos</h2>
+      <ul>
+        <li>Confirmar se tratamos seus dados e acessá-los.</li>
+        <li>Corrigir dados incompletos ou desatualizados.</li>
+        <li>Solicitar a exclusão dos seus dados.</li>
+        <li>Revogar o consentimento a qualquer momento.</li>
+      </ul>
+
+      <h2>Contato</h2>
+      <p>Para exercer seus direitos ou tirar dúvidas, escreva para <span id="privacy-email">[e-mail do responsável]</span>.</p>
+
+      <h2>Responsável</h2>
+      <p><span data-config="NOME_EMPRESA">Northum</span>. [Razão social, CNPJ e endereço.]</p>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var C = window.SITE_CONFIG || {};
+      document.querySelectorAll("[data-config]").forEach(function (el) {
+        var v = C[el.getAttribute("data-config")];
+        if (v) el.textContent = v;
+      });
+      if (C.EMAIL_CONTATO) document.getElementById("privacy-email").textContent = C.EMAIL_CONTATO;
+    })();
+  </script>
+</body>
+</html>
