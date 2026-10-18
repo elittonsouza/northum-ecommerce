@@ -1,0 +1,126 @@
+/* =========================================================
+   Landing page da VSL (/vsl)
+   Complementa styles.css: usa os mesmos tokens e componentes.
+   ========================================================= */
+
+/* Cabeçalho enxuto: só a marca, sem menu, para manter o foco no vídeo */
+.vsl-header { position: absolute; inset: 0 0 auto; z-index: 10; padding-top: 18px; color: var(--white); }
+.vsl-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.vsl-header-tag { font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+
+/* ---------- Primeira dobra ---------- */
+.vsl-hero {
+  position: relative; overflow: hidden; color: var(--white); text-align: center;
+  padding: clamp(5.5rem, 4.5rem + 3vw, 7rem) 0 clamp(3.5rem, 2.5rem + 3vw, 5rem);
+  background:
+    radial-gradient(70% 80% at 92% -5%, rgba(23, 133, 130, .38), transparent 60%),
+    radial-gradient(65% 75% at 0% 110%, rgba(191, 161, 129, .35), transparent 62%),
+    linear-gradient(135deg, #12304A 0%, #0A1828 50%, #06101C 100%);
+}
+.vsl-hero .hero-dots {
+  -webkit-mask-image: radial-gradient(40rem 26rem at 50% 30%, #000 0%, rgba(0,0,0,.4) 45%, transparent 75%);
+          mask-image: radial-gradient(40rem 26rem at 50% 30%, #000 0%, rgba(0,0,0,.4) 45%, transparent 75%);
+  opacity: .35;
+}
+.vsl-hero-inner { position: relative; max-width: 980px; }
+.vsl-hero .hl, .vsl-final .hl { color: var(--gold); }
+.vsl-hero h1 { margin: 0 auto; max-width: 22ch; font-size: clamp(2rem, 1.2rem + 3vw, 3.4rem); letter-spacing: -.04em; line-height: 1.06; }
+.vsl-sub { margin: 1.4rem auto 0; max-width: 44rem; font-size: var(--fs-lead); line-height: 1.6; color: var(--mute); }
+
+/* Player 16:9 */
+.vsl-player {
+  position: relative; margin: clamp(2rem, 1.5rem + 2vw, 3rem) auto 0; aspect-ratio: 16 / 9; width: 100%;
+  border-radius: var(--r-l); overflow: hidden; background: #06101C;
+  border: 1px solid rgba(191, 161, 129, .35);
+  box-shadow: var(--shadow-lift), 0 0 90px -20px rgba(23, 133, 130, .45);
+}
+.vsl-player iframe, .vsl-player video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.vsl-placeholder {
+  position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: .4rem; padding: 1.5rem;
+  background: radial-gradient(60% 70% at 50% 40%, rgba(23, 133, 130, .25), transparent 70%), linear-gradient(160deg, #102236, #06101C);
+  color: var(--mute); font-size: .9375rem;
+}
+.vsl-placeholder b { color: var(--white); font-size: 1.0625rem; }
+.vsl-play { display: grid; place-items: center; width: 76px; height: 76px; margin-bottom: .8rem; border-radius: 50%; background: var(--gold); color: var(--night); box-shadow: 0 0 0 10px rgba(191, 161, 129, .15); }
+.vsl-play svg { width: 30px; height: 30px; margin-left: 4px; }
+
+/* CTA abaixo do vídeo */
+.vsl-cta { margin-top: 2rem; display: grid; justify-items: center; gap: .9rem; }
+.vsl-cta.is-waiting { display: none; }
+.vsl-cta.is-revealed { animation: vslIn .6s ease both; }
+@keyframes vslIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.vsl-cta-note { max-width: 32rem; font-size: .9375rem; color: var(--mute); }
+.btn-lg { min-height: 60px; padding: 1rem 2.2rem; font-size: 1.0625rem; }
+
+/* ---------- Seções ---------- */
+.vsl-section { padding-block: clamp(4rem, 3rem + 4vw, 6.5rem); }
+.vsl-narrow { max-width: 860px; }
+
+.vsl-benefits { display: grid; gap: .8rem; }
+.vsl-benefits li { display: grid; grid-template-columns: 44px 1fr; gap: 1rem; align-items: center; padding: 1.1rem 1.3rem; border-radius: var(--r-m); background: var(--soft); }
+.vsl-benefits p { line-height: 1.5; color: var(--slate); }
+.vsl-benefits b { color: var(--ink); }
+.vb-n { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--night); color: var(--gold); font-weight: 800; }
+.vsl-inline-cta { margin-top: 2.2rem; text-align: center; }
+
+.vsl-leak { max-width: 1000px; margin: 0 auto; }
+.vsl-note { margin: 2rem auto 0; max-width: 42rem; text-align: center; color: var(--slate); }
+
+.vsl-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.vsl-steps li { padding: 1.5rem 1.3rem; border-radius: var(--r-l); background: var(--night-2); border: 1px solid var(--line-dark); }
+.vsl-steps h3 { margin-top: .4rem; font-size: 1.35rem; letter-spacing: -.03em; }
+.vsl-steps p { margin-top: .6rem; font-size: .9375rem; line-height: 1.55; color: var(--mute); }
+@media (max-width: 980px) { .vsl-steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .vsl-steps { grid-template-columns: 1fr; } }
+
+.vsl-two { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.vsl-card { padding: clamp(1.6rem, 1rem + 2.5vw, 2.6rem); border-radius: var(--r-l); background: var(--soft); }
+.vsl-card-dark { background: var(--night); color: var(--white); }
+.vsl-card-dark .ticks li { color: #D3DBE5; }
+.vsl-card-dark .ticks svg { background: rgba(23, 133, 130, .2); color: var(--accent-on-dark); }
+.vsl-h-sm { font-size: 1.6rem; letter-spacing: -.03em; margin-bottom: 1rem; }
+.vsl-fine { margin-top: 1.2rem; font-size: .875rem; color: var(--slate); }
+.vsl-card-dark .vsl-fine { color: var(--mute); }
+@media (max-width: 860px) { .vsl-two { grid-template-columns: 1fr; } }
+
+.vsl-section .fit-no { justify-content: flex-start; }
+
+/* ---------- CTA final ---------- */
+.vsl-final { text-align: center; }
+.vsl-final-inner { position: relative; max-width: 760px; }
+.vsl-final h2 { font-size: var(--fs-h2); }
+.vsl-final p { margin: 1.2rem auto 2rem; max-width: 34rem; font-size: var(--fs-lead); color: var(--mute); }
+.vsl-final-alt { margin-top: 1.4rem !important; font-size: .9375rem !important; }
+.vsl-final-alt a { color: var(--gold); font-weight: 800; text-underline-offset: 4px; }
+.vsl-final-alt.is-hidden { display: none; }
+
+/* ---------- Rodapé ---------- */
+.vsl-footer { padding-top: 2.5rem; }
+.vsl-footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+.vsl-footer .brand { margin-bottom: 0; }
+.vsl-footer-nav { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+.vsl-footer-nav a { text-decoration: none; }
+.vsl-footer-nav a:hover { color: var(--white); }
+.vsl-footer .footer-copy { margin-top: 2rem; }
+
+/* ---------- Janela do formulário ---------- */
+.vsl-dialog { width: min(640px, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; border: 0; border-radius: var(--r-l); background: transparent; overflow: auto; }
+.vsl-dialog::backdrop { background: rgba(6, 16, 28, .72); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.vsl-dialog[open] { animation: vslIn .25s ease both; }
+.vsl-dialog .form { box-shadow: none; }
+.vsl-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.vsl-close { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--soft); color: var(--ink); cursor: pointer; }
+.vsl-close svg { width: 18px; height: 18px; }
+.vsl-close:hover { background: var(--line); }
+body.dialog-open { overflow: hidden; }
+
+@media (max-width: 560px) {
+  .vsl-header-tag { display: none; }
+  .vsl-hero { text-align: left; }
+  .vsl-hero h1, .vsl-sub { margin-left: 0; }
+  .vsl-player { border-radius: var(--r-m); }
+  .vsl-cta { justify-items: stretch; text-align: center; }
+  .vsl-cta .btn, .vsl-inline-cta .btn, .vsl-final .btn { width: 100%; }
+  .vsl-benefits li { grid-template-columns: 36px 1fr; padding: 1rem; }
+  .vb-n { width: 36px; height: 36px; }
+}

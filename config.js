@@ -14,6 +14,13 @@ window.SITE_CONFIG = {
   // URL que recebe o formulário via POST (JSON). Se vazio, o envio abre o WhatsApp.
   FORM_ENDPOINT: "",
 
+  // ---------- Landing page da VSL (/vsl) ----------
+  // Link do vídeo. Aceita link do YouTube, do Vimeo ou uma URL de embed (iframe)
+  // de outro player. Se vazio, a página mostra um espaço reservado.
+  VSL_URL: "",
+  // Segundos até o botão abaixo do vídeo aparecer. 0 = aparece desde o início.
+  VSL_ATRASO_CTA_SEGUNDOS: 0,
+
   // O preço de entrada ainda está em validação.
   MOSTRAR_PRECO: true,
   PRECO_IMPLEMENTACAO: "R$ 5.000",
