@@ -131,9 +131,17 @@
     heroVideo.addEventListener("click", function () { if (heroPlayer.classList.contains("is-preview")) playWithSound(); });
 
     // Começa sozinho, sem som e com legendas: os navegadores só permitem autoplay mudo.
-    // Não inicia para quem pediu menos movimento ou economia de dados.
     // O som só é ligado por um clique (playWithSound); a prévia nunca perde o mudo sozinha.
-    var saveData = navigator.connection && navigator.connection.saveData;
+    // Se o celular bloquear o autoplay (ex.: modo de economia de bateria do iPhone),
+    // a prévia começa no primeiro toque na página.
+    function retryOnFirstTouch() {
+      var events = ["touchend", "click", "keydown"];
+      function go() {
+        events.forEach(function (ev) { document.removeEventListener(ev, go, true); });
+        startPreview();
+      }
+      events.forEach(function (ev) { document.addEventListener(ev, go, true); });
+    }
     function startPreview() {
       if (heroPlayer.classList.contains("is-playing")) return;
       heroVideo.muted = true;
@@ -158,23 +166,22 @@
           });
           return;
         }
-        // Autoplay bloqueado: fica a capa com o botão de play.
+        // Autoplay bloqueado: fica a capa com o botão de play até o primeiro toque.
         heroVideo.pause();
         heroVideo.loop = false;
         if (heroTrack) heroTrack.mode = "disabled";
         heroPlay.setAttribute("aria-label", heroPlayText);
+        retryOnFirstTouch();
       });
     }
-    if (!reduceMotion && !saveData) {
-      if (document.hidden) {
-        document.addEventListener("visibilitychange", function firstShow() {
-          if (document.hidden) return;
-          document.removeEventListener("visibilitychange", firstShow);
-          startPreview();
-        });
-      } else {
+    if (document.hidden) {
+      document.addEventListener("visibilitychange", function firstShow() {
+        if (document.hidden) return;
+        document.removeEventListener("visibilitychange", firstShow);
         startPreview();
-      }
+      });
+    } else {
+      startPreview();
     }
 
     // Analytics: início, metade e fim (uma vez cada)
