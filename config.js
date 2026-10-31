@@ -21,7 +21,7 @@ window.SITE_CONFIG = {
   // Segundos até o botão abaixo do vídeo aparecer. 0 = aparece desde o início.
   VSL_ATRASO_CTA_SEGUNDOS: 0,
 
-  // O preço de entrada ainda está em validação.
-  MOSTRAR_PRECO: true,
-  PRECO_IMPLEMENTACAO: "R$ 5.000",
+  // Preço não é exibido no site.
+  MOSTRAR_PRECO: false,
+  PRECO_IMPLEMENTACAO: "",
 };

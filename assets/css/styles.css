@@ -102,6 +102,8 @@ a { color: inherit; }
   transition: background-color .25s;
 }
 .site-header.scrolled .header-bar { background: rgba(10, 24, 40, .9); }
+.site-header { transition: transform .3s ease, opacity .3s ease; }
+.site-header.is-hidden { transform: translateY(calc(-100% - 20px)); opacity: 0; }
 .brand { display: inline-flex; align-items: center; gap: .5rem; font-weight: 800; font-size: 1.25rem; letter-spacing: -.03em; text-decoration: none; }
 .brand-mark { width: 22px; height: 22px; fill: var(--gold); flex: none; filter: drop-shadow(0 0 8px rgba(191, 161, 129, .45)); }
 .nav { display: flex; gap: 1.6rem; margin-left: auto; }
@@ -179,11 +181,23 @@ a { color: inherit; }
   display: grid; place-items: center; width: clamp(44px, 2vw + 36px, 58px); aspect-ratio: 1; border-radius: 50%;
   background: var(--gold); color: var(--night); box-shadow: 0 0 0 6px rgba(191, 161, 129, .18);
 }
-.hero-play-icon svg { width: 40%; height: 40%; margin-left: 8%; fill: currentColor; }
+.hero-play-icon .ic-play { width: 40%; height: 40%; margin-left: 8%; fill: currentColor; }
 .hero-play-text { display: grid; font-weight: 800; font-size: 1rem; line-height: 1.25; }
 .hero-play-text small { font-size: .8125rem; font-weight: 600; color: #D3DBE5; }
 .hero-play:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .hero-player.is-playing .hero-play { display: none; }
+.hero-play .ic-sound, .hero-play .t-sound { display: none; }
+.t-play, .t-sound { display: grid; }
+/* Prévia muda tocando sozinha: o botão vira "Ativar som" no canto superior, longe das legendas */
+.hero-player.is-preview video { cursor: pointer; }
+.hero-player.is-preview .hero-play { top: clamp(10px, 4%, 28px); bottom: auto; }
+.hero-player.is-preview .hero-play .ic-play, .hero-player.is-preview .hero-play .t-play { display: none; }
+.hero-player.is-preview .hero-play .ic-sound { display: block; }
+.hero-player.is-preview .hero-play .t-sound { display: grid; }
+.hero-player.is-preview .hero-play-icon { animation: heroPulse 2.4s ease-in-out infinite; }
+.hero-play-icon .ic-sound { width: 46%; height: 46%; margin-left: 0; fill: currentColor; }
+@keyframes heroPulse { 0%, 100% { box-shadow: 0 0 0 6px rgba(191, 161, 129, .18); } 50% { box-shadow: 0 0 0 12px rgba(191, 161, 129, .05); } }
+.hero-player video::cue { font-family: var(--font); font-weight: 600; background: rgba(6, 16, 28, .78); }
 
 .fc-ico { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(191, 161, 129,.16); color: var(--team); }
 .fc-ico svg { width: 18px; height: 18px; }

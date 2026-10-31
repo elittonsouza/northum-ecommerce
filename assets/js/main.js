@@ -60,9 +60,22 @@
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("menu");
 
-  function onScroll() { header.classList.toggle("scrolled", window.scrollY > 20); }
+  // Some ao rolar para baixo e volta ao rolar para cima (ou perto do topo).
+  var lastY = window.scrollY;
+  function onScroll() {
+    var y = window.scrollY;
+    header.classList.toggle("scrolled", y > 20);
+    var menuOpen = nav.classList.contains("open");
+    var focusInside = header.contains(document.activeElement) && document.activeElement !== document.body;
+    if (y < 120 || menuOpen || focusInside) header.classList.remove("is-hidden");
+    else if (y > lastY + 4) header.classList.add("is-hidden");
+    else if (y < lastY - 4) header.classList.remove("is-hidden");
+    if (Math.abs(y - lastY) > 4) lastY = y;
+  }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+  // Navegação por teclado: o menu reaparece ao receber foco.
+  header.addEventListener("focusin", function () { header.classList.remove("is-hidden"); });
 
   function setMenu(open) {
     toggle.setAttribute("aria-expanded", String(open));
@@ -94,23 +107,83 @@
   if (heroPlayer && heroVideo && heroPlay) {
     // Sem JavaScript o vídeo mantém os controles nativos; com ele, a capa fica limpa até o play.
     heroVideo.controls = false;
-    heroPlay.addEventListener("click", function () {
-      heroVideo.controls = true;
-      heroPlayer.classList.add("is-playing");
-      var p = heroVideo.play();
-      if (p && p.catch) p.catch(function () { heroPlayer.classList.remove("is-playing"); });
-      heroVideo.focus({ preventScroll: true });
-    });
-    heroVideo.addEventListener("play", function () { heroPlayer.classList.add("is-playing"); });
-
-    // Analytics: início, metade e fim (uma vez cada)
+    var heroTrack = heroVideo.textTracks && heroVideo.textTracks[0];
+    var heroPlayText = heroPlay.getAttribute("aria-label");
     var marks = {};
     function mark(name) { if (!marks[name]) { marks[name] = true; track(name, { video: "apresentacao" }); } }
-    heroVideo.addEventListener("play", function () { mark("video_play"); });
+
+    // Assistir com som, do início, com os controles do navegador.
+    function playWithSound() {
+      var wasPreview = heroPlayer.classList.contains("is-preview");
+      heroPlayer.classList.remove("is-preview");
+      heroPlayer.classList.add("is-playing");
+      heroVideo.loop = false;
+      heroVideo.muted = false;
+      heroVideo.controls = true;
+      if (wasPreview) { heroVideo.currentTime = 0; track("video_unmute", { video: "apresentacao" }); }
+      if (heroTrack) heroTrack.mode = "disabled";
+      var p = heroVideo.play();
+      if (p && p.then) p.then(function () { mark("video_play"); });
+      if (p && p.catch) p.catch(function () { heroPlayer.classList.remove("is-playing"); });
+      heroVideo.focus({ preventScroll: true });
+    }
+    heroPlay.addEventListener("click", playWithSound);
+    heroVideo.addEventListener("click", function () { if (heroPlayer.classList.contains("is-preview")) playWithSound(); });
+
+    // Começa sozinho, sem som e com legendas: os navegadores só permitem autoplay mudo.
+    // Não inicia para quem pediu menos movimento ou economia de dados.
+    // O som só é ligado por um clique (playWithSound); a prévia nunca perde o mudo sozinha.
+    var saveData = navigator.connection && navigator.connection.saveData;
+    function startPreview() {
+      if (heroPlayer.classList.contains("is-playing")) return;
+      heroVideo.muted = true;
+      heroVideo.loop = true;
+      heroVideo.preload = "auto";
+      if (heroTrack) heroTrack.mode = "showing";
+      var auto = heroVideo.play();
+      if (!auto || !auto.then) return;
+      auto.then(function () {
+        if (heroPlayer.classList.contains("is-playing")) return;
+        heroPlayer.classList.add("is-preview");
+        heroPlay.setAttribute("aria-label", "Ativar o som e assistir ao vídeo do início");
+        track("video_autoplay", { video: "apresentacao" });
+      }).catch(function (err) {
+        if (heroPlayer.classList.contains("is-playing")) return;
+        // Aba em segundo plano: o navegador interrompe vídeos mudos; tenta de novo quando ela ficar visível.
+        if (err && err.name === "AbortError" && document.hidden) {
+          document.addEventListener("visibilitychange", function retry() {
+            if (document.hidden) return;
+            document.removeEventListener("visibilitychange", retry);
+            startPreview();
+          });
+          return;
+        }
+        // Autoplay bloqueado: fica a capa com o botão de play.
+        heroVideo.pause();
+        heroVideo.loop = false;
+        if (heroTrack) heroTrack.mode = "disabled";
+        heroPlay.setAttribute("aria-label", heroPlayText);
+      });
+    }
+    if (!reduceMotion && !saveData) {
+      if (document.hidden) {
+        document.addEventListener("visibilitychange", function firstShow() {
+          if (document.hidden) return;
+          document.removeEventListener("visibilitychange", firstShow);
+          startPreview();
+        });
+      } else {
+        startPreview();
+      }
+    }
+
+    // Analytics: início, metade e fim (uma vez cada)
+    // Só conta quem assiste com som; a prévia muda tem o próprio evento (video_autoplay).
+    heroVideo.addEventListener("play", function () { if (!heroVideo.muted) mark("video_play"); });
     heroVideo.addEventListener("timeupdate", function () {
-      if (heroVideo.duration && heroVideo.currentTime / heroVideo.duration >= 0.5) mark("video_50");
+      if (!heroVideo.muted && heroVideo.duration && heroVideo.currentTime / heroVideo.duration >= 0.5) mark("video_50");
     });
-    heroVideo.addEventListener("ended", function () { mark("video_complete"); });
+    heroVideo.addEventListener("ended", function () { if (!heroVideo.muted) mark("video_complete"); });
   }
 
   // ---------- Entrada dos blocos ao rolar ----------
