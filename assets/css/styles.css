@@ -148,55 +148,45 @@ a { color: inherit; }
           mask-image: radial-gradient(34rem 30rem at 76% 42%, #000 0%, rgba(0,0,0,.5) 45%, transparent 75%);
   opacity: .55;
 }
-.hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(2.5rem, 2rem + 3vw, 4rem); align-items: center; }
 .hero h1 { font-size: var(--fs-h1); letter-spacing: -.045em; line-height: 1; }
 .hero .hl { display: block; }
 .lead { margin-top: 1.6rem; font-size: var(--fs-lead); line-height: 1.6; color: var(--mute); max-width: 35rem; }
 .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2.2rem; }
 
-.hero-visual { position: relative; display: grid; justify-items: end; padding: 1rem 0 0; }
-.hero-visual .visual-note { justify-self: end; width: 320px; max-width: 100%; }
-.phone {
-  position: relative; width: 320px; max-width: 100%;
-  padding: 12px; border-radius: 46px;
-  background: linear-gradient(160deg, #1E3550, #0F2236 40%, #071320);
-  box-shadow: var(--shadow-lift), inset 0 0 0 1.5px rgba(255,255,255,.12), 0 0 80px -10px rgba(23, 133, 130, .25);
+/* Hero com o vídeo institucional: texto centralizado e o player como peça principal */
+.hero-video-inner { position: relative; display: grid; justify-items: center; text-align: center; }
+.hero-video h1 { max-width: 20ch; }
+.hero-video .lead { max-width: 44rem; margin-inline: auto; }
+.hero-video .actions { justify-content: center; }
+.hero-player {
+  position: relative; width: 100%; max-width: 1040px; margin: clamp(2.2rem, 1.5rem + 2.5vw, 3.2rem) 0 0;
+  aspect-ratio: 16 / 9; border-radius: var(--r-l); overflow: hidden; background: #06101C;
+  border: 1px solid rgba(191, 161, 129, .35);
+  box-shadow: var(--shadow-lift), 0 0 100px -20px rgba(23, 133, 130, .45);
 }
-.phone-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 92px; height: 26px; border-radius: 20px; background: #040B14; z-index: 2; }
-.phone-status { position: absolute; top: 22px; left: 36px; right: 34px; display: flex; justify-content: space-between; font-size: .75rem; font-weight: 700; color: var(--ink); z-index: 1; }
-.ps-icons { display: flex; gap: 3px; align-items: flex-end; }
-.ps-icons i { width: 4px; background: var(--ink); border-radius: 1px; }
-.ps-icons i:nth-child(1) { height: 5px; } .ps-icons i:nth-child(2) { height: 7px; } .ps-icons i:nth-child(3) { height: 9px; }
-.phone-app { border-radius: 36px; overflow: hidden; background: #F5F3EF; color: var(--ink); padding-top: 46px; display: flex; flex-direction: column; min-height: 600px; }
-.pa-head { display: flex; align-items: center; gap: .7rem; padding: .6rem 1rem .8rem; background: var(--white); border-bottom: 1px solid var(--line); }
-.pa-head b { display: block; font-size: .9375rem; }
-.pa-head small { display: block; font-size: .72rem; color: var(--accent-deep); font-weight: 600; }
-.pa-avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--night); color: var(--gold); font-weight: 800; font-size: .8rem; }
-.chat-log { flex: 1; display: flex; flex-direction: column; gap: .55rem; padding: .9rem .8rem; }
-.msg { max-width: 84%; padding: .55rem .75rem; border-radius: 16px; font-size: .8125rem; line-height: 1.42; font-weight: 500; }
-.msg-buyer { align-self: flex-end; background: var(--night); color: var(--white); border-bottom-right-radius: 5px; }
-.msg-agent { align-self: flex-start; background: var(--white); border-bottom-left-radius: 5px; box-shadow: inset 3px 0 0 var(--accent-deep), 0 1px 2px rgba(10, 24, 40,.06); }
-.msg-team { align-self: flex-start; background: var(--team-soft); border-bottom-left-radius: 5px; box-shadow: inset 3px 0 0 var(--team); }
-.tag { display: block; margin-top: .35rem; font-size: .68rem; font-weight: 700; color: var(--accent-deep); }
-.handoff { display: flex; align-items: center; gap: .5rem; font-size: .7rem; font-weight: 800; color: var(--team-deep); }
-.handoff::before, .handoff::after { content: ""; flex: 1; height: 1.5px; background: var(--team); opacity: .6; }
-.pa-input { display: flex; align-items: center; justify-content: space-between; margin: 0 .8rem .9rem; padding: .55rem .6rem .55rem 1rem; border-radius: 999px; background: var(--white); font-size: .8rem; color: #93A1B2; }
-.pa-input i { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-deep); }
+.hero-player video { display: block; width: 100%; height: 100%; object-fit: cover; background: #06101C; }
+.hero-play {
+  position: absolute; left: clamp(12px, 3%, 32px); bottom: clamp(12px, 5%, 36px);
+  display: inline-flex; align-items: center; gap: .9rem; padding: .55rem 1.4rem .55rem .55rem;
+  border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; cursor: pointer;
+  background: rgba(6, 16, 28, .78); color: var(--white); font: inherit; text-align: left;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .6);
+  transition: background-color .2s, transform .2s;
+}
+.hero-play:hover { background: rgba(6, 16, 28, .92); transform: translateY(-2px); }
+.hero-play-icon {
+  display: grid; place-items: center; width: clamp(44px, 2vw + 36px, 58px); aspect-ratio: 1; border-radius: 50%;
+  background: var(--gold); color: var(--night); box-shadow: 0 0 0 6px rgba(191, 161, 129, .18);
+}
+.hero-play-icon svg { width: 40%; height: 40%; margin-left: 8%; fill: currentColor; }
+.hero-play-text { display: grid; font-weight: 800; font-size: 1rem; line-height: 1.25; }
+.hero-play-text small { font-size: .8125rem; font-weight: 600; color: #D3DBE5; }
+.hero-play:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.hero-player.is-playing .hero-play { display: none; }
 
-.float-card {
-  position: absolute; display: flex; align-items: center; gap: .7rem; padding: .75rem 1rem .75rem .8rem;
-  border-radius: 16px; background: rgba(16, 34, 54, .78); border: 1px solid rgba(255,255,255,.12);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 20px 40px -18px rgba(0,0,0,.6);
-  font-size: .8125rem; line-height: 1.3; color: var(--white); max-width: 14rem;
-}
-.float-card b { display: block; font-weight: 700; }
-.float-card small { display: block; color: var(--mute); font-size: .74rem; }
-.fc-top { top: 22%; left: 0; }
-.fc-bottom { bottom: 20%; left: 0; }
-.fc-dot { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(23, 133, 130,.18); }
 .fc-ico { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(191, 161, 129,.16); color: var(--team); }
 .fc-ico svg { width: 18px; height: 18px; }
-.visual-note { margin-top: 1rem; font-size: .75rem; color: var(--mute); text-align: center; }
 
 .hero-cards { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: clamp(3rem, 2rem + 3vw, 4.5rem); }
 .glass-card { padding: 1.2rem 1.3rem; border-radius: var(--r-m); background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
@@ -207,23 +197,19 @@ a { color: inherit; }
 .glass-card p { margin-top: .4rem; font-size: .9rem; line-height: 1.5; color: var(--mute); }
 
 @media (max-width: 960px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-visual { justify-items: center; }
-  .hero-visual .visual-note { justify-self: center; }
   .hero-cards { grid-template-columns: 1fr; }
-  .fc-top { left: 2%; }
-  .fc-bottom { left: auto; right: 2%; }
+}
+@media (max-width: 640px) {
+  .hero-video-inner { justify-items: start; text-align: left; }
+  .hero-video .lead { margin-inline: 0; }
+  .hero-player { border-radius: var(--r-m); }
+  .hero-play { padding: .35rem; left: 10px; bottom: 10px; }
+  .hero-play-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .hero-play-icon { width: 46px; }
 }
 @media (max-width: 520px) {
   .actions .btn { flex: 1 1 100%; }
-  .float-card { display: none; }
-  .phone { width: 300px; }
-  .phone-app { min-height: 560px; }
 }
-
-/* Sequência do chat: entrada única */
-.chat-log.is-playing > li { opacity: 0; transform: translateY(8px) scale(.98); }
-.chat-log.is-playing > li.shown { opacity: 1; transform: none; transition: opacity .4s ease, transform .4s ease; }
 
 /* =========================================================
    Problema
@@ -563,6 +549,5 @@ a { color: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
   .js .reveal { opacity: 1; transform: none; }
-  .chat-log.is-playing > li { opacity: 1; transform: none; }
   .curve-card.reveal:not(.in) .curve-line { stroke-dashoffset: 0; }
 }

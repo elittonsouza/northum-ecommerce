@@ -62,49 +62,30 @@
   <main id="conteudo">
 
     <!-- ================= HERO ================= -->
-    <section class="hero">
+    <section class="hero hero-video">
       <div class="hero-dots" aria-hidden="true"></div>
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">Pré-venda assistida para e-commerce</p>
-          <h1>Quem está prestes a comprar <span class="hl">merece uma resposta agora</span></h1>
-          <p class="lead">Implementamos um agente comercial com IA que complementa o pré-atendimento do seu e-commerce. Ele responde com base nas informações aprovadas pela sua loja, orienta o comprador e encaminha para a sua equipe o que exige uma pessoa.</p>
-          <div class="actions">
-            <a class="btn btn-primary" href="#diagnostico" data-cta="hero">Solicitar diagnóstico</a>
-            <a class="btn btn-ghost" href="#como-funciona">Como funciona</a>
-          </div>
-        </div>
+      <div class="wrap hero-video-inner">
+        <p class="eyebrow">Pré-venda assistida para e-commerce</p>
+        <h1>Quem está prestes a comprar <span class="hl">merece uma resposta agora</span></h1>
+        <p class="lead">Implementamos um agente comercial com IA que complementa o pré-atendimento do seu e-commerce. Ele responde com base nas informações aprovadas pela sua loja, orienta o comprador e encaminha para a sua equipe o que exige uma pessoa.</p>
 
-        <div class="hero-visual">
-          <div class="phone" role="img" aria-label="Simulação de conversa de pré-venda: o agente responde uma dúvida com base no catálogo e encaminha outra para uma pessoa da equipe">
-            <div class="phone-notch"></div>
-            <div class="phone-status"><span>9:41</span><span class="ps-icons"><i></i><i></i><i></i></span></div>
-            <div class="phone-app">
-              <div class="pa-head">
-                <span class="pa-avatar">LT</span>
-                <div><b>Loja Terra</b><small>Responde 7 dias por semana</small></div>
-              </div>
-              <ol class="chat-log" id="chat-log">
-                <li class="msg msg-buyer">Essa panela funciona em cooktop de indução?</li>
-                <li class="msg msg-agent">Funciona, sim. A linha Terra tem fundo triplo com aço magnético. Quer ver os tamanhos?<span class="tag">Base: catálogo da loja</span></li>
-                <li class="msg msg-buyer">Quero a de 24 cm. Vocês fazem embalagem de presente com cartão?</li>
-                <li class="msg msg-agent">Essa informação não está confirmada pela loja. Vou chamar alguém da equipe para responder certinho.</li>
-                <li class="handoff"><span>Marina, da equipe, assumiu</span></li>
-                <li class="msg msg-team">Oi! Fazemos, sim. O cartão sai com a mensagem que você escrever no checkout.</li>
-              </ol>
-              <div class="pa-input"><span>Mensagem</span><i></i></div>
-            </div>
-          </div>
+        <figure class="hero-player" id="hero-player">
+          <video id="hero-video" controls preload="none" playsinline
+                 poster="assets/video/northum-apresentacao-capa.jpg"
+                 aria-label="Vídeo de apresentação da Northum e do Método Conversão 7D">
+            <source src="assets/video/northum-apresentacao.mp4" type="video/mp4">
+            <track kind="captions" src="assets/video/northum-apresentacao.pt-BR.vtt" srclang="pt-BR" label="Português">
+            Seu navegador não reproduz vídeo. <a href="assets/video/northum-apresentacao.mp4">Baixe o vídeo de apresentação</a>.
+          </video>
+          <button class="hero-play" type="button" id="hero-play" aria-label="Assistir ao vídeo de apresentação, 1 minuto e 27 segundos">
+            <span class="hero-play-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+            <span class="hero-play-text">Assistir ao vídeo<small>1:27 · com legendas</small></span>
+          </button>
+        </figure>
 
-          <div class="float-card fc-top" aria-hidden="true">
-            <span class="fc-dot fc-agent"></span>
-            <div><b>Resposta com base no catálogo</b><small>Informação aprovada pela loja</small></div>
-          </div>
-          <div class="float-card fc-bottom" aria-hidden="true">
-            <span class="fc-ico"><svg><use href="#i-handoff"/></svg></span>
-            <div><b>Encaminhado para a equipe</b><small>Com o histórico da conversa</small></div>
-          </div>
-          <p class="visual-note">Simulação ilustrativa. Loja, produto e pessoas fictícios.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#diagnostico" data-cta="hero">Solicitar diagnóstico</a>
+          <a class="btn btn-ghost" href="#como-funciona">Como funciona</a>
         </div>
       </div>
 

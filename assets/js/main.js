@@ -87,15 +87,30 @@
     });
   });
 
-  // ---------- Chat do hero: um único momento animado ----------
-  var log = document.getElementById("chat-log");
-  if (log && !reduceMotion) {
-    var lines = Array.prototype.slice.call(log.children);
-    log.classList.add("is-playing");
-    var delays = [300, 1100, 2300, 3300, 4300, 5000];
-    lines.forEach(function (li, i) {
-      setTimeout(function () { li.classList.add("shown"); }, delays[i] || 600 * i);
+  // ---------- Vídeo do hero ----------
+  var heroPlayer = document.getElementById("hero-player");
+  var heroVideo = document.getElementById("hero-video");
+  var heroPlay = document.getElementById("hero-play");
+  if (heroPlayer && heroVideo && heroPlay) {
+    // Sem JavaScript o vídeo mantém os controles nativos; com ele, a capa fica limpa até o play.
+    heroVideo.controls = false;
+    heroPlay.addEventListener("click", function () {
+      heroVideo.controls = true;
+      heroPlayer.classList.add("is-playing");
+      var p = heroVideo.play();
+      if (p && p.catch) p.catch(function () { heroPlayer.classList.remove("is-playing"); });
+      heroVideo.focus({ preventScroll: true });
     });
+    heroVideo.addEventListener("play", function () { heroPlayer.classList.add("is-playing"); });
+
+    // Analytics: início, metade e fim (uma vez cada)
+    var marks = {};
+    function mark(name) { if (!marks[name]) { marks[name] = true; track(name, { video: "apresentacao" }); } }
+    heroVideo.addEventListener("play", function () { mark("video_play"); });
+    heroVideo.addEventListener("timeupdate", function () {
+      if (heroVideo.duration && heroVideo.currentTime / heroVideo.duration >= 0.5) mark("video_50");
+    });
+    heroVideo.addEventListener("ended", function () { mark("video_complete"); });
   }
 
   // ---------- Entrada dos blocos ao rolar ----------
