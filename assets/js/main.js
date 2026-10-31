@@ -110,7 +110,7 @@
     var heroTrack = heroVideo.textTracks && heroVideo.textTracks[0];
     var heroPlayText = heroPlay.getAttribute("aria-label");
     var marks = {};
-    function mark(name) { if (!marks[name]) { marks[name] = true; track(name, { video: "apresentacao" }); } }
+    function mark(name) { if (!marks[name]) { marks[name] = true; track(name, { video: "institucional" }); } }
 
     // Assistir com som, do início, com os controles do navegador.
     function playWithSound() {
@@ -120,7 +120,7 @@
       heroVideo.loop = false;
       heroVideo.muted = false;
       heroVideo.controls = true;
-      if (wasPreview) { heroVideo.currentTime = 0; track("video_unmute", { video: "apresentacao" }); }
+      if (wasPreview) { heroVideo.currentTime = 0; track("video_unmute", { video: "institucional" }); }
       if (heroTrack) heroTrack.mode = "disabled";
       var p = heroVideo.play();
       if (p && p.then) p.then(function () { mark("video_play"); });
@@ -146,7 +146,7 @@
         if (heroPlayer.classList.contains("is-playing")) return;
         heroPlayer.classList.add("is-preview");
         heroPlay.setAttribute("aria-label", "Ativar o som e assistir ao vídeo do início");
-        track("video_autoplay", { video: "apresentacao" });
+        track("video_autoplay", { video: "institucional" });
       }).catch(function (err) {
         if (heroPlayer.classList.contains("is-playing")) return;
         // Aba em segundo plano: o navegador interrompe vídeos mudos; tenta de novo quando ela ficar visível.
