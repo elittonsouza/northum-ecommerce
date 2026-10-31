@@ -208,6 +208,7 @@ a { color: inherit; }
 .gc-label::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--mute); }
 .gc-agent::before { background: var(--accent); }
 .gc-team::before { background: var(--team); }
+.gc-ret::before { background: #DCE4EE; }
 .glass-card p { margin-top: .4rem; font-size: .9rem; line-height: 1.5; color: var(--mute); }
 
 @media (max-width: 960px) {
@@ -311,6 +312,42 @@ a { color: inherit; }
 .band-7d h3 { font-size: 1.5rem; letter-spacing: -.03em; }
 .band-7d p { margin-top: .5rem; max-width: 40rem; font-weight: 500; line-height: 1.55; }
 @media (max-width: 640px) { .band-7d { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   Áreas de atuação
+   ========================================================= */
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+.pillar { display: flex; flex-direction: column; padding: clamp(1.6rem, 1rem + 2vw, 2.2rem); border-radius: var(--r-l); background: var(--soft); border: 1px solid var(--line); }
+.pillar-top { display: flex; align-items: center; justify-content: space-between; }
+.pillar .step-n { color: var(--gold-deep); }
+.pillar h3 { margin-top: 1.2rem; font-size: 1.5rem; letter-spacing: -.03em; }
+.pillar-goal { margin-top: .35rem; color: var(--slate); font-weight: 600; line-height: 1.5; }
+.pillar .ticks { margin: 1rem 0 1.4rem; font-size: .9375rem; }
+.pillar-kpi { margin-top: auto; padding-top: 1.1rem; border-top: 1px solid var(--line); font-size: .9rem; color: var(--slate); line-height: 1.5; }
+.pillar-kpi b { display: block; margin-bottom: .3rem; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-deep); }
+
+.infra { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.6fr); gap: clamp(1.5rem, 1rem + 3vw, 3rem); align-items: center; margin-top: 1.2rem; padding: clamp(1.6rem, 1rem + 2.5vw, 2.6rem); border-radius: var(--r-l); background: var(--night); color: var(--white); }
+.infra::before { content: ""; position: absolute; inset: 0; background: radial-gradient(30rem 16rem at 100% 0%, rgba(23, 133, 130,.16), transparent 60%); pointer-events: none; }
+.infra > * { position: relative; }
+.infra h3 { font-size: 1.5rem; letter-spacing: -.03em; }
+.infra p { margin-top: .5rem; color: var(--mute); line-height: 1.55; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chips li { padding: .5rem .9rem; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid var(--line-dark); font-size: .875rem; font-weight: 600; color: #DCE4EE; }
+@media (max-width: 960px) { .pillars, .infra { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   Modelo de parceria
+   ========================================================= */
+.models { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.2rem; }
+.model { display: flex; flex-direction: column; padding: 1.6rem; border-radius: var(--r-l); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+.model-tag { align-self: flex-start; padding: .3rem .7rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent-deep); font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.model-gold .model-tag { background: var(--gold-soft); color: var(--gold-deep); }
+.model h3 { margin-top: 1rem; font-size: 1.3rem; letter-spacing: -.02em; }
+.model p { margin-top: .5rem; font-size: .9375rem; color: var(--slate); line-height: 1.55; }
+.scope-main h3 { font-size: 1.15rem; margin-bottom: .6rem; }
+.scope-note { margin-top: 1.2rem; padding-top: 1.1rem; border-top: 1px solid var(--line); font-size: .9375rem; color: var(--slate); line-height: 1.55; }
+@media (max-width: 1020px) { .models { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .models { grid-template-columns: 1fr; } }
 
 /* =========================================================
    Método

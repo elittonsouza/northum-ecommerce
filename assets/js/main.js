@@ -35,7 +35,7 @@
   });
 
   document.querySelectorAll(".js-whatsapp").forEach(function (a) {
-    a.href = waLink("Olá! Quero conversar sobre o Método Conversão 7D.");
+    a.href = waLink("Olá! Quero conversar sobre o meu e-commerce com a Northum.");
     a.target = "_blank";
     a.rel = "noopener";
   });
@@ -230,8 +230,8 @@
     },
     loja: function (v) { return v.trim().length >= 2 || "Informe o nome da loja ou o endereço do site."; },
     papel: function (v) { return !!v || "Selecione o seu papel."; },
-    canal: function (v) { return !!v || "Selecione o principal canal de dúvidas."; },
-    volume: function (v) { return !!v || "Selecione uma faixa de volume, ou \"Não sei\"."; },
+    area: function (v) { return !!v || "Selecione onde está o maior desafio."; },
+    volume: function (v) { return !!v || "Selecione uma faixa, ou \"Prefiro não informar\"."; },
     lgpd: function (_, el) { return el.checked || "Para entrarmos em contato, marque a concordância."; },
   };
 
@@ -262,15 +262,15 @@
 
   function summary(d) {
     return [
-      "Olá! Quero solicitar um diagnóstico do Método Conversão 7D.",
+      "Olá! Quero solicitar um diagnóstico para o meu e-commerce.",
       "",
       "Nome: " + d.nome,
       "Contato: " + d.contato,
       "Loja/site: " + d.loja,
       "Papel: " + d.papel,
-      "Canal principal: " + d.canal,
-      "Conversas de pré-venda/mês: " + d.volume,
-      d.desafio ? "Maior desafio: " + d.desafio : "",
+      "Maior desafio: " + d.area,
+      "Pedidos/mês: " + d.volume,
+      d.desafio ? "Detalhes: " + d.desafio : "",
     ].filter(Boolean).join("\n");
   }
 
@@ -287,7 +287,7 @@
       contato: form.contato.value.trim(),
       loja: form.loja.value.trim(),
       papel: form.papel.value,
-      canal: form.canal.value,
+      area: form.area.value,
       volume: form.volume.value,
       desafio: form.desafio.value.trim(),
       consentimento_lgpd: true,
@@ -299,7 +299,7 @@
     var label = btn.textContent;
 
     function done() {
-      track("form_submit", { volume: data.volume, canal: data.canal });
+      track("form_submit", { volume: data.volume, area: data.area });
       form.reset();
       form.querySelectorAll("[aria-invalid]").forEach(function (el) { el.removeAttribute("aria-invalid"); });
       setStatus("ok", "Recebemos seu pedido. Vamos entrar em contato para combinar o diagnóstico.");
