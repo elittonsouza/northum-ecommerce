@@ -574,6 +574,60 @@ a { color: inherit; }
 @media (max-width: 920px) { .diag { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
 
+/* Cartão da seção de diagnóstico: resume a aplicação e abre o pop-up */
+.apply-card { gap: 1.2rem; }
+.apply-steps { display: grid; gap: .9rem; margin-bottom: .4rem; }
+.apply-steps li { display: grid; grid-template-columns: 34px 1fr; gap: .9rem; align-items: start; color: var(--slate); font-size: .9375rem; line-height: 1.5; }
+.apply-steps span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--night); color: var(--gold); font-weight: 800; font-size: .875rem; }
+.apply-steps b { display: block; color: var(--ink); font-size: 1rem; }
+.apply-card .btn { text-align: center; }
+.apply-note { text-align: center; font-size: .875rem; color: var(--slate); }
+
+/* =========================================================
+   Pop-up de aplicação (diagnóstico gratuito)
+   ========================================================= */
+body.dialog-open { overflow: hidden; }
+.apply-dialog { width: min(520px, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 0; border-radius: var(--r-l); background: var(--white); color: var(--ink); box-shadow: var(--shadow-lift); overflow: auto; overscroll-behavior: contain; }
+.apply-dialog::backdrop { background: rgba(6, 16, 28, .72); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.apply-dialog[open] { animation: applyIn .25s ease both; }
+@keyframes applyIn { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+.apply { position: relative; padding: clamp(1.5rem, 1rem + 2vw, 2.4rem); }
+.apply [hidden] { display: none !important; }
+.apply-step { display: grid; gap: 1rem; }
+.apply-close { position: absolute; top: 1rem; right: 1rem; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--soft); color: var(--ink); cursor: pointer; transition: background-color .15s; }
+.apply-close:hover { background: var(--line); }
+.apply-close svg { width: 18px; height: 18px; }
+.apply-progress { display: flex; gap: .4rem; width: 96px; margin-bottom: 1.2rem; }
+.apply-progress i { flex: 1; height: 4px; border-radius: 4px; background: var(--line); transition: background-color .25s; }
+.apply-progress i.on { background: var(--gold); }
+.apply-kicker { font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-deep); }
+.apply-title { margin-top: -.6rem; padding-right: 3rem; font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2rem); letter-spacing: -.035em; line-height: 1.1; }
+.apply-title:focus { outline: none; }
+.apply-sub { margin-top: -.5rem; color: var(--slate); line-height: 1.5; }
+.apply-choice { border: 0; padding: 0; margin: 0; min-width: 0; }
+.apply-choice legend { padding: 0; margin-bottom: .4rem; font-size: .875rem; font-weight: 700; }
+.choice-row { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.choice-row label { position: relative; cursor: pointer; }
+.choice-row input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.choice-row span { display: grid; place-items: center; min-height: 50px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--soft); font-weight: 700; transition: border-color .15s, background-color .15s, color .15s; }
+.choice-row label:hover span { border-color: #C9C2B6; }
+.choice-row input:checked + span { border-color: var(--accent-deep); background: var(--accent-soft); color: var(--accent-deep); }
+.choice-row input:focus-visible + span { box-shadow: 0 0 0 4px rgba(19, 107, 105,.18); }
+.choice-row input[aria-invalid="true"] + span { border-color: #C2362B; }
+.apply-legal { text-align: center; font-size: .8125rem; color: var(--slate); }
+.apply-legal a { color: var(--ink); font-weight: 600; text-underline-offset: 3px; }
+.apply-actions { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .2rem; }
+.apply-actions .btn { flex: 1; }
+.apply-back { padding: .8rem .4rem; border: 0; background: none; font: 700 1rem var(--font); color: var(--slate); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.apply-back:hover { color: var(--ink); }
+.apply-done { justify-items: center; text-align: center; padding-top: .5rem; }
+.apply-done .apply-title, .apply-done .apply-sub { margin-top: 0; padding-right: 0; }
+.apply-done-ico { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-deep); }
+.apply-done-ico svg { width: 30px; height: 30px; }
+@media (max-width: 560px) {
+  .apply-dialog { width: calc(100% - 1rem); max-height: calc(100dvh - 1rem); border-radius: var(--r-m); }
+}
+
 /* =========================================================
    Rodapé
    ========================================================= */

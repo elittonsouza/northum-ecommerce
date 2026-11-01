@@ -86,16 +86,14 @@
   nav.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
 
-  // ---------- CTAs: rastrear e focar o formulário ----------
+  // ---------- CTAs: rastrear; os de diagnóstico abrem o pop-up de aplicação ----------
   document.querySelectorAll("[data-cta]").forEach(function (el) {
-    el.addEventListener("click", function () {
+    el.addEventListener("click", function (e) {
       track("cta_click", { origem: el.getAttribute("data-cta") });
       if (el.classList.contains("js-whatsapp")) track("whatsapp_click", { origem: el.getAttribute("data-cta") });
-      if (el.getAttribute("href") === "#diagnostico") {
-        setTimeout(function () {
-          var first = document.getElementById("f-nome");
-          if (first) first.focus({ preventScroll: true });
-        }, reduceMotion ? 0 : 500);
+      if (el.getAttribute("href") === "#diagnostico" && applyDialog) {
+        e.preventDefault();
+        openApply(el);
       }
     });
   });
@@ -222,44 +220,138 @@
     }, { threshold: 0.15 }).observe(diag);
   }
 
-  // ---------- Formulário ----------
-  var form = document.getElementById("diag-form");
+  // ---------- Pop-up de aplicação para o diagnóstico gratuito ----------
+  // Passo 1: contato e se tem loja. Passo 2: sobre a loja. Envio: FORM_ENDPOINT → WhatsApp → aviso.
+  var applyDialog = document.getElementById("apply-dialog");
+  var form = document.getElementById("apply-form");
   var status = document.getElementById("form-status");
-  if (!form) return;
+  var lastTrigger = null;
+  var applyOrigin = "";
+  var steps = form ? form.querySelectorAll(".apply-step") : [];
+  var bars = form ? form.querySelectorAll(".apply-progress i") : [];
+
+  // UTMs da URL vão junto com a aplicação
+  var utm = {};
+  new URLSearchParams(location.search).forEach(function (v, k) { if (/^utm_/.test(k)) utm[k] = v; });
+
+  function showStep(name) {
+    steps.forEach(function (s) { s.hidden = s.getAttribute("data-step") !== name; });
+    bars.forEach(function (b, i) { b.classList.toggle("on", name === "done" || i < Number(name)); });
+    form.querySelector(".apply-progress").hidden = name === "done";
+    var focusEl = form.querySelector('.apply-step[data-step="' + name + '"] ' + (name === "done" ? ".apply-title" : "input, select"));
+    if (focusEl) focusEl.focus();
+    applyDialog.scrollTop = 0;
+  }
+
+  function openApply(trigger) {
+    lastTrigger = trigger || null;
+    applyOrigin = (trigger && trigger.getAttribute("data-cta")) || "";
+    if (form.querySelector('[data-step="done"]').hidden === false) { form.reset(); setStatus("", ""); }
+    if (typeof applyDialog.showModal === "function") applyDialog.showModal();
+    else applyDialog.setAttribute("open", "");
+    document.body.classList.add("dialog-open");
+    if (form.querySelector('[data-step="2"]').hidden) showStep("1");
+    track("apply_open", { origem: applyOrigin });
+  }
+  function closeApply() {
+    if (typeof applyDialog.close === "function") applyDialog.close();
+    else { applyDialog.removeAttribute("open"); onClose(); }
+  }
+  function onClose() {
+    document.body.classList.remove("dialog-open");
+    if (!form.querySelector('[data-step="done"]').hidden) { form.reset(); showStep("1"); setStatus("", ""); }
+    if (lastTrigger) lastTrigger.focus({ preventScroll: true });
+  }
+  if (!applyDialog || !form) return;
+  applyDialog.addEventListener("close", onClose);
+  applyDialog.addEventListener("click", function (e) { if (e.target === applyDialog) closeApply(); });
+  form.querySelectorAll("[data-close]").forEach(function (b) { b.addEventListener("click", closeApply); });
+  if (location.hash === "#aplicar") openApply(null);
+
+  function hasStore() {
+    var c = form.querySelector('input[name="tem_loja"]:checked');
+    return !c || c.value === "Sim";
+  }
+  function phoneDigits(v) {
+    var d = digits(v);
+    if (d.length > 11 && d.indexOf("55") === 0) d = d.slice(2);
+    return d;
+  }
 
   var rules = {
     nome: function (v) { return v.trim().length >= 2 || "Informe seu nome."; },
-    contato: function (v) {
-      v = v.trim();
-      var email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-      var phone = digits(v).length >= 10;
-      return email || phone || "Informe um e-mail válido ou um WhatsApp com DDD.";
-    },
-    loja: function (v) { return v.trim().length >= 2 || "Informe o nome da loja ou o endereço do site."; },
-    papel: function (v) { return !!v || "Selecione o seu papel."; },
-    area: function (v) { return !!v || "Selecione onde está o maior desafio."; },
-    volume: function (v) { return !!v || "Selecione uma faixa, ou \"Prefiro não informar\"."; },
-    lgpd: function (_, el) { return el.checked || "Para entrarmos em contato, marque a concordância."; },
+    email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || "Informe um e-mail válido."; },
+    whatsapp: function (v) { var d = phoneDigits(v); return (d.length === 10 || d.length === 11) || "Informe o WhatsApp com DDD."; },
+    tem_loja: function () { return !!form.querySelector('input[name="tem_loja"]:checked') || "Selecione uma opção."; },
+    segmento: function (v) { return !!v || "Selecione o segmento."; },
+    faturamento: function (v) { return !hasStore() || !!v || "Selecione uma faixa, ou \"Prefiro não informar\"."; },
+    equipe: function (v) { return !!v || "Selecione o tamanho da equipe."; },
   };
+  var stepFields = { 1: ["nome", "email", "whatsapp", "tem_loja"], 2: ["segmento", "faturamento", "equipe"] };
 
   function check(name) {
     var el = form.elements[name];
-    var res = rules[name](el.value, el);
+    var target = el.length && !el.tagName ? el[0] : el;
+    var res = rules[name](el.value || "", el);
     var err = document.getElementById("e-" + name);
     var ok = res === true;
-    el.setAttribute("aria-invalid", ok ? "false" : "true");
+    target.setAttribute("aria-invalid", ok ? "false" : "true");
     if (err) {
       err.textContent = ok ? "" : res;
-      if (!ok) el.setAttribute("aria-describedby", err.id); else el.removeAttribute("aria-describedby");
+      if (!ok) target.setAttribute("aria-describedby", err.id); else target.removeAttribute("aria-describedby");
     }
     return ok;
   }
-
-  Object.keys(rules).forEach(function (name) {
-    var el = form.elements[name];
-    el.addEventListener(el.tagName === "SELECT" || el.type === "checkbox" ? "change" : "blur", function () {
-      if (el.getAttribute("aria-invalid") !== null || el.value) check(name);
+  function checkStep(n) {
+    var firstBad = null;
+    stepFields[n].forEach(function (name) {
+      if (!check(name) && !firstBad) { var el = form.elements[name]; firstBad = el.length && !el.tagName ? el[0] : el; }
     });
+    if (firstBad) firstBad.focus();
+    return !firstBad;
+  }
+
+  ["nome", "email", "whatsapp"].forEach(function (name) {
+    form.elements[name].addEventListener("blur", function () { if (this.value) check(name); });
+  });
+  ["segmento", "faturamento", "equipe"].forEach(function (name) {
+    form.elements[name].addEventListener("change", function () { check(name); });
+  });
+
+  // Máscara do WhatsApp: (11) 98765-4321
+  form.elements.whatsapp.addEventListener("input", function () {
+    var d = phoneDigits(this.value).slice(0, 11);
+    var out = d;
+    if (d.length > 2) out = "(" + d.slice(0, 2) + ") " + d.slice(2);
+    if (d.length > 6) out = "(" + d.slice(0, 2) + ") " + d.slice(2, d.length - 4) + "-" + d.slice(d.length - 4);
+    this.value = out;
+  });
+
+  // Sem loja: o passo 2 fala do projeto e não pede faturamento nem site.
+  function applyStoreMode() {
+    var store = hasStore();
+    form.querySelectorAll("[data-text-loja]").forEach(function (el) {
+      el.textContent = el.getAttribute(store ? "data-text-loja" : "data-text-sem-loja");
+    });
+    form.querySelectorAll("[data-only-loja]").forEach(function (el) { el.hidden = !store; });
+  }
+  form.querySelectorAll('input[name="tem_loja"]').forEach(function (r) {
+    r.addEventListener("change", function () { check("tem_loja"); applyStoreMode(); });
+  });
+
+  document.getElementById("apply-next").addEventListener("click", function () {
+    if (!checkStep(1)) return;
+    applyStoreMode();
+    track("apply_step1", { origem: applyOrigin, tem_loja: hasStore() ? "sim" : "nao" });
+    showStep("2");
+  });
+  document.getElementById("apply-back").addEventListener("click", function () { setStatus("", ""); showStep("1"); });
+  // Enter no passo 1 avança em vez de enviar
+  form.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !form.querySelector('[data-step="1"]').hidden && e.target.tagName === "INPUT") {
+      e.preventDefault();
+      document.getElementById("apply-next").click();
+    }
   });
 
   function setStatus(kind, msg) {
@@ -269,47 +361,48 @@
 
   function summary(d) {
     return [
-      "Olá! Quero solicitar um diagnóstico para o meu e-commerce.",
+      "Olá! Quero aplicar para o diagnóstico gratuito da Northum.",
       "",
       "Nome: " + d.nome,
-      "Contato: " + d.contato,
-      "Loja/site: " + d.loja,
-      "Papel: " + d.papel,
-      "Maior desafio: " + d.area,
-      "Pedidos/mês: " + d.volume,
-      d.desafio ? "Detalhes: " + d.desafio : "",
+      "E-mail: " + d.email,
+      "WhatsApp: " + d.whatsapp,
+      "Tem loja: " + d.tem_loja,
+      "Segmento: " + d.segmento,
+      d.faturamento ? "Faturamento mensal: " + d.faturamento : "",
+      "Equipe: " + d.equipe,
+      d.site ? "Site: " + d.site : "",
     ].filter(Boolean).join("\n");
   }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var firstBad = null;
-    Object.keys(rules).forEach(function (name) {
-      if (!check(name) && !firstBad) firstBad = form.elements[name];
-    });
-    if (firstBad) { firstBad.focus(); return; }
+    if (!checkStep(1)) { showStep("1"); checkStep(1); return; }
+    if (!checkStep(2)) return;
+    var store = hasStore();
 
-    var data = {
+    var data = Object.assign({
       nome: form.nome.value.trim(),
-      contato: form.contato.value.trim(),
-      loja: form.loja.value.trim(),
-      papel: form.papel.value,
-      area: form.area.value,
-      volume: form.volume.value,
-      desafio: form.desafio.value.trim(),
-      consentimento_lgpd: true,
-      origem: "site",
+      email: form.email.value.trim(),
+      whatsapp: "+55" + phoneDigits(form.whatsapp.value),
+      tem_loja: store ? "Sim" : "Não",
+      segmento: form.segmento.value,
+      faturamento: store ? form.faturamento.value : "",
+      equipe: form.equipe.value,
+      site: store ? form.site.value.trim() : "",
+      aceite_politica_privacidade: true,
+      origem: "site" + (applyOrigin ? ":" + applyOrigin : ""),
+      pagina: location.pathname,
       enviado_em: new Date().toISOString(),
-    };
+    }, utm);
 
     var btn = form.querySelector('button[type="submit"]');
     var label = btn.textContent;
 
-    function done() {
-      track("form_submit", { volume: data.volume, area: data.area });
-      form.reset();
-      form.querySelectorAll("[aria-invalid]").forEach(function (el) { el.removeAttribute("aria-invalid"); });
-      setStatus("ok", "Recebemos seu pedido. Vamos entrar em contato para combinar o diagnóstico.");
+    function done(text) {
+      track("form_submit", { origem: applyOrigin, tem_loja: store ? "sim" : "nao", faturamento: data.faturamento, equipe: data.equipe });
+      if (text) document.getElementById("apply-done-text").textContent = text;
+      setStatus("", "");
+      showStep("done");
     }
 
     if (C.FORM_ENDPOINT) {
@@ -328,8 +421,7 @@
         .finally(function () { btn.disabled = false; btn.textContent = label; });
     } else if (hasWhatsApp) {
       window.open(waLink(summary(data)), "_blank", "noopener");
-      done();
-      setStatus("ok", "Abrimos o WhatsApp com os seus dados. É só enviar a mensagem para combinarmos o diagnóstico.");
+      done("Abrimos o WhatsApp com as suas respostas. É só enviar a mensagem para combinarmos o diagnóstico.");
     } else {
       setStatus("fail", "O envio ainda não está configurado. Defina FORM_ENDPOINT ou WHATSAPP_NUMERO em config.js.");
       console.warn("[site] Formulário sem destino: configure FORM_ENDPOINT ou WHATSAPP_NUMERO em config.js.");

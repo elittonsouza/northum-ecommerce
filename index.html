@@ -54,7 +54,7 @@
         <a href="#parceria">Parceria</a>
         <a href="#perguntas">Perguntas</a>
       </nav>
-      <a class="btn btn-primary btn-sm header-cta" href="#diagnostico" data-cta="header">Solicitar diagnóstico</a>
+      <a class="btn btn-primary btn-sm header-cta" href="#diagnostico" data-cta="header">Diagnóstico gratuito</a>
       <button class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span><span></span></button>
     </div>
   </header>
@@ -87,7 +87,7 @@
         </figure>
 
         <div class="actions">
-          <a class="btn btn-primary" href="#diagnostico" data-cta="hero">Solicitar diagnóstico</a>
+          <a class="btn btn-primary" href="#diagnostico" data-cta="hero">Aplicar para o diagnóstico gratuito</a>
           <a class="btn btn-ghost" href="#como-funciona">Como trabalhamos</a>
         </div>
       </div>
@@ -171,7 +171,7 @@
       <div class="wrap reveal">
         <p class="question-text">Você sabe em que ponto da jornada o seu e-commerce <span class="hl">mais perde oportunidades?</span></p>
         <p class="question-sub">Na atração, na decisão de compra ou depois do primeiro pedido. Antes de investir mais em tráfego ou em equipe, vale saber onde está o gargalo.</p>
-        <a class="btn btn-primary" href="#diagnostico" data-cta="pergunta">Descobrir no diagnóstico</a>
+        <a class="btn btn-primary" href="#diagnostico" data-cta="pergunta">Descobrir no diagnóstico gratuito</a>
       </div>
     </section>
 
@@ -493,7 +493,7 @@
               <li><svg><use href="#i-x"/></svg>Não é possível disponibilizar informações, acessos ou um responsável agora.</li>
             </ul>
             <p class="fit-close">Na dúvida, o diagnóstico serve justamente para isso.</p>
-            <a class="btn btn-primary" href="#diagnostico" data-cta="para-quem">Solicitar diagnóstico</a>
+            <a class="btn btn-primary" href="#diagnostico" data-cta="para-quem">Aplicar para o diagnóstico gratuito</a>
           </article>
         </div>
       </div>
@@ -633,7 +633,7 @@
           <details><summary>Quanto tempo leva um projeto?</summary><p>O prazo é definido na proposta, conforme o escopo, as integrações e a disponibilidade das informações.</p></details>
           <details><summary>Preciso participar do projeto?</summary><p>Sim. Precisamos de alguém da sua equipe para fornecer informações e acessos, aprovar regras e participar dos testes.</p></details>
           <details><summary>Como é cobrado?</summary><p>A implementação é um projeto com valor definido na proposta. Manutenção e operação são contratações recorrentes, com escopo e preço próprios.</p></details>
-          <details><summary>O que é o diagnóstico?</summary><p>Uma conversa para entender a sua operação, identificar onde a jornada do cliente perde oportunidades e verificar se e como a Northum pode ajudar.</p></details>
+          <details><summary>O que é o diagnóstico? Tem custo?</summary><p>O diagnóstico é gratuito. É uma conversa para entender a sua operação, identificar onde a jornada do cliente perde oportunidades e verificar se e como a Northum pode ajudar.</p></details>
         </div>
       </div>
     </section>
@@ -643,9 +643,9 @@
       <div class="hero-dots dots-left" aria-hidden="true"></div>
       <div class="wrap diag">
         <div class="diag-copy reveal">
-          <p class="eyebrow">Diagnóstico</p>
-          <h2>Vamos conversar sobre os desafios <span class="hl">do seu e-commerce</span></h2>
-          <p>Uma conversa para entender a sua operação, encontrar onde a jornada do cliente perde oportunidades e avaliar se a Northum pode ajudar. Se não puder, a gente diz.</p>
+          <p class="eyebrow">Diagnóstico gratuito</p>
+          <h2>Descubra o que mais trava <span class="hl">o seu e-commerce</span></h2>
+          <p>Aplique para um diagnóstico gratuito. Vamos entender a sua operação, encontrar onde a jornada do cliente perde oportunidades e avaliar se a Northum pode ajudar. Se não puder, a gente diz.</p>
           <ul class="ticks ticks-light">
             <li><svg><use href="#i-check"/></svg>Visão dos principais gargalos em aquisição, conversão e retenção.</li>
             <li><svg><use href="#i-check"/></svg>Avaliação de processos, sistemas e informações disponíveis.</li>
@@ -654,75 +654,16 @@
           <p class="diag-alt" data-show-if="whatsapp">Prefere conversar direto? <a href="#" class="js-whatsapp" data-cta="diagnostico-whatsapp">Falar no WhatsApp</a></p>
         </div>
 
-        <form class="form reveal" id="diag-form" novalidate>
-          <h3 class="form-title">Solicite seu diagnóstico</h3>
-          <div class="field">
-            <label for="f-nome">Nome</label>
-            <input id="f-nome" name="nome" type="text" autocomplete="name" required>
-            <p class="err" id="e-nome"></p>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="f-contato">E-mail ou WhatsApp</label>
-              <input id="f-contato" name="contato" type="text" autocomplete="email" required>
-              <p class="err" id="e-contato"></p>
-            </div>
-            <div class="field">
-              <label for="f-loja">Nome da loja ou site</label>
-              <input id="f-loja" name="loja" type="text" autocomplete="organization" required>
-              <p class="err" id="e-loja"></p>
-            </div>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="f-papel">Seu papel</label>
-              <select id="f-papel" name="papel" required>
-                <option value="">Selecione</option>
-                <option>Proprietário(a)</option>
-                <option>Gestor(a) de e-commerce</option>
-                <option>Marketing ou vendas</option>
-                <option>Atendimento ou operação</option>
-                <option>Outro</option>
-              </select>
-              <p class="err" id="e-papel"></p>
-            </div>
-            <div class="field">
-              <label for="f-area">Onde está o maior desafio</label>
-              <select id="f-area" name="area" required>
-                <option value="">Selecione</option>
-                <option>Atrair e qualificar clientes</option>
-                <option>Converter contatos em vendas</option>
-                <option>Fazer clientes voltarem a comprar</option>
-                <option>Processos manuais e integrações</option>
-                <option>Ainda não sei</option>
-              </select>
-              <p class="err" id="e-area"></p>
-            </div>
-          </div>
-          <div class="field">
-            <label for="f-volume">Pedidos por mês, aproximadamente</label>
-            <select id="f-volume" name="volume" required>
-              <option value="">Selecione</option>
-              <option>Até 300</option>
-              <option>De 300 a 1.000</option>
-              <option>De 1.000 a 5.000</option>
-              <option>Mais de 5.000</option>
-              <option>Prefiro não informar</option>
-            </select>
-            <p class="err" id="e-volume"></p>
-          </div>
-          <div class="field">
-            <label for="f-desafio">Conte um pouco sobre o desafio <span class="opt">(opcional)</span></label>
-            <textarea id="f-desafio" name="desafio" rows="3"></textarea>
-          </div>
-          <div class="field field-check">
-            <input id="f-lgpd" name="lgpd" type="checkbox" required>
-            <label for="f-lgpd">Concordo com o uso dos meus dados para contato sobre o diagnóstico, conforme a <a href="privacidade.html">política de privacidade</a>.</label>
-            <p class="err" id="e-lgpd"></p>
-          </div>
-          <button class="btn btn-primary btn-block" type="submit">Solicitar diagnóstico</button>
-          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-        </form>
+        <div class="form apply-card reveal">
+          <h3 class="form-title">Como funciona a aplicação</h3>
+          <ol class="apply-steps">
+            <li><span>1</span><div><b>Seus dados de contato</b>Nome, e-mail, WhatsApp e se você já tem loja.</div></li>
+            <li><span>2</span><div><b>Sobre a sua loja</b>Segmento, faturamento e tamanho da equipe.</div></li>
+            <li><span>3</span><div><b>Retornamos o contato</b>Para combinar o diagnóstico com você.</div></li>
+          </ol>
+          <a class="btn btn-primary btn-block" href="#diagnostico" data-cta="diagnostico">Aplicar para o diagnóstico gratuito</a>
+          <p class="apply-note">Leva menos de 1 minuto.</p>
+        </div>
       </div>
     </section>
 
@@ -752,6 +693,109 @@
     </div>
     <p class="wrap footer-copy">© <span id="ano"></span> <span data-config="NOME_EMPRESA">Northum</span>. Todos os direitos reservados.</p>
   </footer>
+
+  <!-- Pop-up de aplicação para o diagnóstico gratuito (aberto pelos botões que apontam para #diagnostico) -->
+  <dialog class="apply-dialog" id="apply-dialog" aria-labelledby="apply-title">
+    <form class="apply" id="apply-form" novalidate>
+      <button class="apply-close" type="button" data-close aria-label="Fechar"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
+      <div class="apply-progress" aria-hidden="true"><i class="on"></i><i></i></div>
+
+      <div class="apply-step" data-step="1">
+        <p class="apply-kicker">Passo 1 de 2</p>
+        <h2 class="apply-title" id="apply-title">Diagnóstico gratuito</h2>
+        <p class="apply-sub">Informe seus dados de contato.</p>
+        <div class="field">
+          <label for="a-nome">Nome</label>
+          <input id="a-nome" name="nome" type="text" autocomplete="name" required>
+          <p class="err" id="e-nome"></p>
+        </div>
+        <div class="field">
+          <label for="a-email">E-mail</label>
+          <input id="a-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+          <p class="err" id="e-email"></p>
+        </div>
+        <div class="field">
+          <label for="a-whatsapp">WhatsApp com DDD</label>
+          <input id="a-whatsapp" name="whatsapp" type="tel" autocomplete="tel-national" inputmode="tel" placeholder="(11) 98765-4321" required>
+          <p class="err" id="e-whatsapp"></p>
+        </div>
+        <fieldset class="field apply-choice">
+          <legend>Você já tem loja virtual?</legend>
+          <div class="choice-row">
+            <label><input type="radio" name="tem_loja" value="Sim" required><span>Sim</span></label>
+            <label><input type="radio" name="tem_loja" value="Não"><span>Não</span></label>
+          </div>
+          <p class="err" id="e-tem_loja"></p>
+        </fieldset>
+        <p class="apply-legal">Ao continuar, você concorda com a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</p>
+        <button class="btn btn-primary btn-block" type="button" id="apply-next">Avançar</button>
+      </div>
+
+      <div class="apply-step" data-step="2" hidden>
+        <p class="apply-kicker">Passo 2 de 2</p>
+        <h2 class="apply-title" id="apply-title-2" data-text-loja="Sobre a sua loja" data-text-sem-loja="Sobre o seu projeto">Sobre a sua loja</h2>
+        <p class="apply-sub">Isso nos ajuda a preparar o diagnóstico.</p>
+        <div class="field">
+          <label for="a-segmento" data-text-loja="Segmento da loja" data-text-sem-loja="Segmento em que pretende atuar">Segmento da loja</label>
+          <select id="a-segmento" name="segmento" required>
+            <option value="">Selecione</option>
+            <option>Moda e acessórios</option>
+            <option>Beleza e cuidados pessoais</option>
+            <option>Casa e decoração</option>
+            <option>Eletrônicos e informática</option>
+            <option>Saúde e suplementos</option>
+            <option>Esporte e lazer</option>
+            <option>Alimentos e bebidas</option>
+            <option>Pet</option>
+            <option>Infantil</option>
+            <option>Outro</option>
+          </select>
+          <p class="err" id="e-segmento"></p>
+        </div>
+        <div class="field" data-only-loja>
+          <label for="a-faturamento">Faturamento mensal</label>
+          <select id="a-faturamento" name="faturamento" required>
+            <option value="">Selecione</option>
+            <option>Até R$ 50 mil</option>
+            <option>De R$ 50 mil a R$ 200 mil</option>
+            <option>De R$ 200 mil a R$ 500 mil</option>
+            <option>De R$ 500 mil a R$ 1 milhão</option>
+            <option>Acima de R$ 1 milhão</option>
+            <option>Prefiro não informar</option>
+          </select>
+          <p class="err" id="e-faturamento"></p>
+        </div>
+        <div class="field">
+          <label for="a-equipe">Tamanho da equipe</label>
+          <select id="a-equipe" name="equipe" required>
+            <option value="">Selecione</option>
+            <option>Só eu</option>
+            <option>De 2 a 5 pessoas</option>
+            <option>De 6 a 15 pessoas</option>
+            <option>De 16 a 50 pessoas</option>
+            <option>Mais de 50 pessoas</option>
+          </select>
+          <p class="err" id="e-equipe"></p>
+        </div>
+        <div class="field" data-only-loja>
+          <label for="a-site">Site da loja <span class="opt">(opcional)</span></label>
+          <input id="a-site" name="site" type="text" inputmode="url" autocomplete="url" placeholder="sualoja.com.br">
+        </div>
+        <div class="apply-actions">
+          <button class="apply-back" type="button" id="apply-back">Voltar</button>
+          <button class="btn btn-primary" type="submit">Enviar aplicação</button>
+        </div>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="apply-step apply-done" data-step="done" hidden>
+        <span class="apply-done-ico" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+        <h2 class="apply-title" tabindex="-1">Aplicação recebida</h2>
+        <p class="apply-sub" id="apply-done-text">Vamos analisar as suas informações e entrar em contato para combinar o diagnóstico.</p>
+        <button class="btn btn-primary btn-block" type="button" data-close>Fechar</button>
+      </div>
+    </form>
+  </dialog>
 
   <a class="wa-float js-whatsapp" href="#" data-show-if="whatsapp" data-cta="whatsapp-flutuante" aria-label="Falar no WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
